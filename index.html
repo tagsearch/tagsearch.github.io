@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>tagsearch - XRP Transaction Lookup</title>
+</head>
+<body>
+
+<h2>Ripple Address and Destination Tag Lookup</h1>
+
+<p><input type="text" name="account" id="account" size="37" placeholder="Address" /></p>
+<p><input type="text" name="dest_tag" id="dest_tag" size="12" placeholder="Destination Tag" /></p>
+
+<button type="button" onclick="queryAddress()">Request data</button>
+
+<h2>Ripple Transaction Hash</h1>
+
+<p><input type="text" name="tx_hash" id="tx_hash" size="68" placeholder="Transaction Hash" /></p>
+
+<button type="button" onclick="queryHash()">Request data</button>
+
+
+<p id="lookup"></p>
+
+<script>
+function queryAddress() {
+  var baseURL = "https://data.ripple.com/v2/accounts/";
+  var accountValue = document.getElementById("account").value;
+  var destTag = document.getElementById("dest_tag").value;
+  var param1 = "/payments?destination_tag=";
+  var getURL = baseURL.concat(accountValue,param1,destTag);
+  var xhttp = new XMLHttpRequest();
+  xhttp.onreadystatechange = function() {
+    if (this.readyState == 4 && this.status == 200) {
+      document.getElementById("lookup").innerHTML = this.responseText;
+    }
+  };
+  xhttp.open("GET", getURL, true);
+  xhttp.send();
+}
+
+function queryHash() {
+  var baseURL = "https://data.ripple.com/v2/transactions/";
+  var txHash = document.getElementById("tx_hash").value;
+  var param1 = "?binary=false";
+  var getURL = baseURL.concat(txHash,param1);
+  var xhttp = new XMLHttpRequest();
+  xhttp.onreadystatechange = function() {
+    if (this.readyState == 4 && this.status == 200) {
+      document.getElementById("lookup").innerHTML = this.responseText;
+    }
+  };
+  xhttp.open("GET", getURL, true);
+  xhttp.send();
+}
+
+</script>
+<br>
+<p style="font-size:12px">This page uses <a href="https://developers.ripple.com/data-api.html">Ripple Data API v2</a> and example code from <a href="https://www.w3schools.com/js/js_ajax_http_send.asp">w3schools.com</p>
+</body>
+</html>
