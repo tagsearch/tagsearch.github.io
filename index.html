@@ -10,13 +10,13 @@
 <p><input type="text" name="account" id="account" size="37" placeholder="Address" /></p>
 <p><input type="text" name="dest_tag" id="dest_tag" size="12" placeholder="Destination Tag" /></p>
 
-<button type="button" onclick="queryAddress()">Request data</button>
+<button type="button" id="queryAddressBtn" onclick="queryAddress()">Request data</button>
 
 <h2>Ripple Transaction Hash</h1>
 
 <p><input type="text" name="tx_hash" id="tx_hash" size="68" placeholder="Transaction Hash" /></p>
 
-<button type="button" onclick="queryHash()">Request data</button>
+<button type="button" id="queryHashBtn" onclick="queryHash()">Request data</button>
 
 
 <p id="lookup"></p>
@@ -52,6 +52,30 @@ function queryHash() {
   xhttp.open("GET", getURL, true);
   xhttp.send();
 }
+
+var input = document.getElementById("account");
+input.addEventListener("keyup", function(event) {
+    event.preventDefault();
+    if (event.keyCode === 13) {
+        document.getElementById("queryAddressBtn").click();
+    }
+});
+
+var input = document.getElementById("dest_tag");
+input.addEventListener("keyup", function(event) {
+    event.preventDefault();
+    if (event.keyCode === 13) {
+        document.getElementById("queryAddressBtn").click();
+    }
+});
+
+var input = document.getElementById("tx_hash");
+input.addEventListener("keyup", function(event) {
+    event.preventDefault();
+    if (event.keyCode === 13) {
+        document.getElementById("queryHashBtn").click();
+    }
+});
 
 </script>
 <br>
